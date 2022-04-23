@@ -44,7 +44,7 @@ class ChooseElement extends React.Component{
 
 
 
-        let valtemp=(this.props.text)
+        let valtemp=marked.parse(this.props.text)
         
         
         
