@@ -20,3 +20,8 @@
   width: 99%;
   min-height: 10em;
 }
+.PreviewBox{
+  text-align: left;
+  background-color: rgb(180, 147, 106);
+  padding: 0.2em;
+}

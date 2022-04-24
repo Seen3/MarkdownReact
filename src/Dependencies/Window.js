@@ -1,5 +1,6 @@
 import React from 'react';
 import {marked} from "marked";
+let parser=new DOMParser();
 class WindowTitle extends React.Component{
     render()
     {
@@ -14,7 +15,19 @@ class TextBox extends React.Component{
     {
         super(props);
         this.state={
-            value:"#Enter Markdown here"
+            value:`# This is heading
+## This is subheading
+\`<html>Code comes here</html>\`
+\`\`\`int a=0;
+a+=10;
+\`\`\`
+**BOLD** _ITALIC_ **_Both_**
+
+- and lists
+    - morelists
+    
+![Pikachu](https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp/220px-Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp.png)
+`
         }
         this.handleChange=this.handleChange.bind(this);
     }
@@ -41,19 +54,15 @@ class ChooseElement extends React.Component{
     {
         const iseditor=this.props.title==="Editor";
 
-
-
-
-        let valtemp=marked.parse(this.props.text)
-        
-        
-        
+        let valtemp=this.props.text;
         
         if (iseditor)
         {
-        valtemp=<TextBox onChange={this.props.handler}/>
+        return <TextBox onChange={this.props.handler}/>
         }
-        return valtemp;
+        let obj=(marked.parse(valtemp));
+
+        return <div className='PreviewBox' dangerouslySetInnerHTML={{__html:obj}}></div> ;
     }
 }
 class Window extends React.Component{
@@ -64,12 +73,23 @@ class Window extends React.Component{
     
     render()
     {
+        if (this.props.title==="Editor"){
         return(
             <div className='Box'>
                 <WindowTitle title={this.props.title} />
+
                 <ChooseElement title={this.props.title} handler={this.props.onChange} text={this.props.text}/>
+            
             </div>
-        );
+        );}
+        else
+        {
+            //{homes.map(home => <div>{home.name}</div>)}
+            return(<div className='Box'>
+                <WindowTitle title={this.props.title} />
+                <ChooseElement title={this.props.title} handler={this.props.onChange} text={this.props.text}/>
+            </div>)
+        }
     }
 }
 export default class Windows extends React.Component{
@@ -77,7 +97,18 @@ export default class Windows extends React.Component{
     {
         super(props);
         this.state={
-            value:"#Enter Markdown Here"
+            value:`# This is heading
+## This is subheading
+\`<html>Code comes here</html>\`
+\`\`\`int a=0;
+a+=10;
+\`\`\`
+**BOLD** _ITALIC_ **_Both_**
+- and lists
+    - morelists
+
+![Pikachu](https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp/220px-Pikachu_artwork_for_Pok%C3%A9mon_Red_and_Blue.webp.png)
+`
         }
         this.handler=this.handler.bind(this);
     }
